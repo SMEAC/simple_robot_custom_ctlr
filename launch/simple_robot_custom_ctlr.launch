@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+
+    <!-- Start of launch file sets up the parameters to be used in this launch file and for
+         the subsequent nodes that are started.  Namespace, Model Name, and so forth.  -->
+    <arg name="ns" default="robot"/>
+    <arg name="name" default="simple_robot_custom_ctlr"/>    
+    <arg name="gui" default="true"/>
+    <param name="use_gui" value="gui"/>    
+    <arg name="rvizconfig" default="$(find simple_robot)/rviz/urdf.rviz" />
+    
+    <!-- Rviz is a node to allow visualisation of the sensor data coming from the robot.
+         In a more advanced form, it also allows controls to be sent to the robot, including
+         move_it kinematics, or move_base path planning commands.  -->
+
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)" required="false" />
+
+    <!-- Loading the robot model from the URDF file into the parameter server -->
+
+    <arg name="model" default="$(find simple_robot_custom_ctlr)/urdf/simple_robot_custom_ctlr.xacro"/>
+    <param name="robot_description" command="$(find xacro)/xacro $(arg model)"/>
+    <arg name="robot_model" default="$(find simple_robot_custom_ctlr)/urdf/simple_robot_custom_ctlr.urdf"/>
+
+    <!-- The URDF data provides information about how the links and joints are related to each other.
+         Additional information is needed as the joints move, or the robot moves around, and 
+         this information is provided by the state publishers.  Additional transforms
+         that were not defined in the urdf file, can also be established through
+         static_transform_publishers-->
+    <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher"/>
+    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" ></node> 
+    <node pkg="tf2_ros" type="static_transform_publisher" name="odom_broadcaster" args="0 0 0 0 0 0 chassis map" /> 
+
+    <!-- Starting the Gazebo 3D Simulator, including a custom world file -->
+       
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+        <arg name="verbose" value="true" />
+        <arg name="world_name" value="$(find simple_robot_custom_ctlr)/worlds/simple_world.world"/>-->
+    </include>
+  
+    <!-- Spawning our robot into the simulation -->
+    <arg name="x" default="0.0"/>
+    <arg name="y" default="1.0"/>
+    <arg name="z" default="0.0"/>
+    <node name="spawn_robot" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen" args="          -unpause
+                -urdf
+                -param robot_description 
+                -model $(arg name)
+                -x $(arg x) 
+                -y $(arg y) 
+                -z $(arg z)" />
+
+
+    <!-- Creating the Robot Controllers, to allow the robot to be moved in the simulation -->
+    
+	<rosparam file="$(find simple_robot_custom_ctlr)/config/custom_diff_drive.yaml" command="load" />
+	<node name="simple_controller_manager" pkg="controller_manager" type="spawner"
+          respawn="false" output="screen" args="wheel_left_velocity_controller wheel_right_velocity_controller" />
+</launch>
