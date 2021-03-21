@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<package>
+  <name>simple_robot_custom_ctlr</name>
+  <version>0.0.1</version>
+  <description>
+    This ROS package provides a simple starting point for a mobile robotics course.  It is so developed, that the students can continually improve varying points of the package as their knowledge increases.
+  </description>
+  
+  <maintainer email="gavin.kane@hs-emden-leer.de">Gavin Kane</maintainer>
+  <license>MIT</license>
+  
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>controller_manager</build_depend>
+  <run_depend>controller_manager</run_depend>
+</package>
