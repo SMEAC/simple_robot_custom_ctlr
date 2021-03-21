@@ -123,7 +123,7 @@
     <joint type="continuous" name="wheel_left_joint">
         <parent link="chassis"/>
         <child link="left_wheel"/>
-        <origin xyz="-0.1 -0.13 0" rpy="0 1.5707 1.5707"/>
+        <origin xyz="-0.1 -0.13 0" rpy="0 -1.5707 1.5707"/>
         <axis xyz="0 0 1"/>
         <calibration rising="0.0"/>
         <dynamics damping="0.1" friction="0.1"/>
@@ -134,7 +134,7 @@
     <joint type="continuous" name="wheel_right_joint">
         <parent link="chassis"/>
         <child link="right_wheel"/>
-        <origin xyz="-0.1 0.13 0" rpy="0 1.5707 1.5707"/>
+        <origin xyz="-0.1 0.13 0" rpy="0 -1.5707 1.5707"/>
         <axis xyz="0 0 1"/>
         <calibration rising="0.0"/>
         <dynamics damping="0.1" friction="0.1"/>
