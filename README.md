@@ -10,3 +10,10 @@ Included in the package are:
 * a launch file for Gazebo and Rviz
 * a config file for Rviz
 
+To test the Package, start the launch file, see that no errors appear in the command window while starting Gazebo and then in a second terminal window, send a command to one of the velocity controllers with:
+
+rostopic pub wheel_left_velocity_controller/command std_msgs/Float64 -- '0.5'
+
+or 
+
+rostopic pub wheel_right_velocity_controller/command std_msgs/Float64 -- '0.5'
