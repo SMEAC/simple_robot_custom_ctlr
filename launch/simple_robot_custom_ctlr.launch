@@ -7,7 +7,7 @@
     <arg name="name" default="simple_robot_custom_ctlr"/>    
     <arg name="gui" default="true"/>
     <param name="use_gui" value="gui"/>    
-    <arg name="rvizconfig" default="$(find simple_robot)/rviz/urdf.rviz" />
+    <arg name="rvizconfig" default="$(find simple_robot_custom_ctlr)/rviz/urdf.rviz" />
     
     <!-- Rviz is a node to allow visualisation of the sensor data coming from the robot.
          In a more advanced form, it also allows controls to be sent to the robot, including
